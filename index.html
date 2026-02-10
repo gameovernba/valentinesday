@@ -1,359 +1,192 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Valentine?</title>
-  <style>
-    :root{
-      --peach:#ffd2c2;
-      --peach2:#ffbfa9;
-      --ink:#2b2b2b;
-      --btn:#ffffffcc;
-      --btnBorder:#0000001a;
-      --shadow: 0 18px 40px rgba(0,0,0,.12);
-    }
-    *{ box-sizing:border-box; }
-    body{
-      margin:0;
-      min-height:100vh;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--ink);
-      background:
-        radial-gradient(1200px 700px at 30% 20%, #fff6, transparent 55%),
-        radial-gradient(1000px 650px at 80% 70%, #fff5, transparent 60%),
-        linear-gradient(135deg, var(--peach), var(--peach2));
-      overflow:hidden;
-    }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Valentine?</title>
 
-    .wrap{
-      position:relative;
-      min-height:100vh;
-      display:grid;
-      place-items:center;
-      padding:24px;
-    }
+<style>
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: linear-gradient(135deg,#ffd2c2,#ffbfa9);
+  overflow:hidden;
+}
 
-    .card{
-      width:min(560px, 92vw);
-      background: rgba(255,255,255,.45);
-      border: 1px solid rgba(255,255,255,.55);
-      border-radius: 28px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
-      padding: 26px 22px 22px;
-      text-align:center;
-    }
+.wrap{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:20px;
+}
 
-    h1{
-      margin: 10px 0 6px;
-      font-size: clamp(24px, 4vw, 34px);
-    }
-    p{ margin: 0 0 14px; opacity:.85; }
+.card{
+  width:min(560px,92vw);
+  background:rgba(255,255,255,.45);
+  border-radius:25px;
+  padding:24px;
+  text-align:center;
+  backdrop-filter: blur(10px);
+  box-shadow:0 18px 40px rgba(0,0,0,.12);
+}
 
-    .cat{
-      width: 210px;
-      margin: 0 auto 10px;
-      filter: drop-shadow(0 14px 18px rgba(0,0,0,.12));
-    }
+h1{ margin:10px 0; }
+p{ opacity:.8; }
 
-    .btnRow{
-      display:flex;
-      gap:14px;
-      justify-content:center;
-      margin-top: 14px;
-      flex-wrap:wrap;
-    }
+.cat{
+  width:260px;
+  display:block;
+  margin:0 auto 12px;
+  filter:
+    drop-shadow(0 0 0 8px white)
+    drop-shadow(0 16px 22px rgba(0,0,0,.18));
+}
 
-    button{
-      border:none;
-      background: var(--btn);
-      border: 1px solid var(--btnBorder);
-      padding: 12px 18px;
-      border-radius: 999px;
-      font-size: 16px;
-      cursor:pointer;
-      transition: transform .12s ease, box-shadow .12s ease;
-      box-shadow: 0 10px 22px rgba(0,0,0,.08);
-      user-select:none;
-      -webkit-tap-highlight-color: transparent;
-    }
-    button:hover{ transform: translateY(-1px); }
-    button:active{ transform: translateY(1px) scale(.99); }
+.btnRow{
+  margin-top:10px;
+}
 
-    #yesBtn{
-      background: rgba(61, 187, 99, .18);
-      border-color: rgba(61, 187, 99, .28);
-    }
+button{
+  border:none;
+  padding:12px 18px;
+  margin:6px;
+  border-radius:999px;
+  font-size:16px;
+  cursor:pointer;
+}
 
-    /* No button is free to run anywhere */
-    #noBtn{
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      will-change: left, top;
-      z-index: 5;
-    }
+#yesBtn{
+  background:#b7f5c8;
+}
 
-    .msg{
-      margin-top: 14px;
-      font-weight: 650;
-      display:none;
-    }
+#noBtn{
+  position:absolute;
+}
 
-    /* Gallery overlay */
-    .overlay{
-      position:fixed;
-      inset:0;
-      display:none;
-      z-index: 20;
-      background:
-        radial-gradient(900px 500px at 20% 15%, #fff6, transparent 60%),
-        linear-gradient(135deg, rgba(255,210,194,.95), rgba(255,191,169,.95));
-      overflow:auto;
-      padding: 26px;
-      animation: fadeIn .35s ease forwards;
-    }
-    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+.overlay{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#ffd2c2,#ffbfa9);
+  display:none;
+  overflow:auto;
+  padding:20px;
+}
 
-    .overlayInner{
-      max-width: 980px;
-      margin: 0 auto;
-      text-align:center;
-    }
-    .overlay h2{
-      margin: 10px 0 6px;
-      font-size: clamp(22px, 3.5vw, 32px);
-    }
-    .overlay .sub{
-      margin: 0 0 16px;
-      opacity:.85;
-    }
+.grid{
+  max-width:900px;
+  margin:20px auto;
+  display:grid;
+  grid-template-columns: repeat(auto-fit,minmax(160px,1fr));
+  gap:12px;
+}
 
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 14px;
-      padding-bottom: 24px;
-    }
+.grid img{
+  width:100%;
+  height:200px;
+  object-fit:cover;
+  border-radius:16px;
+}
 
-    .tile{
-      background: rgba(255,255,255,.55);
-      border: 1px solid rgba(255,255,255,.6);
-      border-radius: 18px;
-      overflow:hidden;
-      box-shadow: 0 14px 30px rgba(0,0,0,.10);
-      transform: translateY(6px);
-      animation: pop .45s ease forwards;
-    }
-    @keyframes pop { to { transform: translateY(0) } }
-
-    .tile img{
-      width:100%;
-      height: 220px;
-      object-fit: cover;
-      display:block;
-    }
-
-    .closeRow{
-      position: sticky;
-      top: 0;
-      display:flex;
-      justify-content: center;
-      gap: 10px;
-      padding: 10px 0 18px;
-      backdrop-filter: blur(6px);
-    }
-
-    canvas{
-      position:fixed;
-      inset:0;
-      pointer-events:none;
-      z-index: 30;
-    }
-  </style>
+canvas{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+}
+</style>
 </head>
+
 <body>
-  <canvas id="confetti"></canvas>
+<canvas id="confetti"></canvas>
 
-  <div class="wrap" id="stage">
-    <div class="card" id="card">
-      <!-- Paste your updated “her cat” SVG here -->
-      <svg class="cat" viewBox="0 0 240 240" aria-label="Her cat">
-        <path d="M54 72 L34 40 Q30 32 38 34 L76 52 Z" fill="#3f434a"/>
-        <path d="M186 72 L206 40 Q210 32 202 34 L164 52 Z" fill="#3f434a"/>
-        <path d="M54 72 L42 52 Q37 44 44 46 L68 58 Z" fill="#f3a6b3"/>
-        <path d="M186 72 L198 52 Q203 44 196 46 L172 58 Z" fill="#f3a6b3"/>
-        <path d="M120 52 C70 52, 42 88, 42 132 C42 182, 84 206, 120 206 C156 206, 198 182, 198 132 C198 88, 170 52, 120 52Z" fill="#ffffff"/>
-        <path d="M42 120 C55 70, 185 70, 198 120 L198 90 C180 60, 60 60, 42 90Z" fill="#3f434a"/>
-        <ellipse cx="88" cy="120" rx="26" ry="20" fill="#3f434a"/>
-        <ellipse cx="152" cy="120" rx="26" ry="20" fill="#3f434a"/>
-        <ellipse cx="88" cy="122" rx="12" ry="11" fill="#4bd172"/>
-        <ellipse cx="152" cy="122" rx="12" ry="11" fill="#4bd172"/>
-        <ellipse cx="88" cy="124" rx="4" ry="10" fill="#1b1b1b"/>
-        <ellipse cx="152" cy="124" rx="4" ry="10" fill="#1b1b1b"/>
-        <path d="M120 140 C113 140, 108 145, 108 150 C108 155, 114 158, 120 158 C126 158, 132 155, 132 150 C132 145, 127 140, 120 140Z" fill="#ff8ca3"/>
-        <path d="M120 158 C120 168, 110 172, 104 170" stroke="#2b2b2b" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <path d="M120 158 C120 168, 130 172, 136 170" stroke="#2b2b2b" stroke-width="3" fill="none" stroke-linecap="round"/>
-        <path d="M58 152 L18 144" stroke="#2b2b2b" stroke-width="3" stroke-linecap="round"/>
-        <path d="M58 160 L16 160" stroke="#2b2b2b" stroke-width="3" stroke-linecap="round"/>
-        <path d="M58 168 L18 176" stroke="#2b2b2b" stroke-width="3" stroke-linecap="round"/>
-        <path d="M182 152 L222 144" stroke="#2b2b2b" stroke-width="3" stroke-linecap="round"/>
-        <path d="M182 160 L224 160" stroke="#2b2b2b" stroke-width="3" stroke-linecap="round"/>
-        <path d="M182 168 L222 176" stroke="#2b2b2b" stroke-width="3" stroke-linecap="round"/>
-      </svg>
+<div class="wrap" id="stage">
+  <div class="card">
 
-      <h1>Will you be my Valentine? 💘</h1>
-      <p>Choose wisely. (The cat is watching.)</p>
+    <!-- REAL GINKO -->
+    <img src="ginko.png" class="cat">
 
-      <div class="btnRow">
-        <button id="yesBtn">Yes</button>
-        <span aria-hidden="true" style="width:140px;height:52px;display:inline-block;"></span>
-      </div>
+    <h1>Will you be my Valentine? 💘</h1>
+    <p>Choose wisely. (Ginko is watching.)</p>
 
-      <div class="msg" id="msg">Yessss 😺💚 I knew it.</div>
+    <div class="btnRow">
+      <button id="yesBtn">Yes</button>
     </div>
 
-    <button id="noBtn">No</button>
   </div>
 
-  <!-- Photo Gallery Overlay -->
-  <div class="overlay" id="overlay">
-    <div class="overlayInner">
-      <div class="closeRow">
-        <button id="backBtn">Back</button>
-      </div>
+  <button id="noBtn">No</button>
+</div>
 
-      <h2>My favorite pictures of us 📸💞</h2>
-      <div class="sub">Happy Valentine’s Day ❤️</div>
-
-      <div class="grid" id="grid"></div>
-    </div>
+<div class="overlay" id="overlay">
+  <h1 style="text-align:center;">My favorite pictures of us ❤️</h1>
+  <div class="grid" id="grid"></div>
+  <div style="text-align:center;">
+    <button onclick="overlay.style.display='none'">Back</button>
   </div>
+</div>
 
-  <script>
-    const stage = document.getElementById('stage');
-    const noBtn = document.getElementById('noBtn');
-    const yesBtn = document.getElementById('yesBtn');
-    const msg = document.getElementById('msg');
+<script>
+const stage = document.getElementById('stage');
+const noBtn = document.getElementById('noBtn');
+const yesBtn = document.getElementById('yesBtn');
+const overlay = document.getElementById('overlay');
+const grid = document.getElementById('grid');
 
-    const overlay = document.getElementById('overlay');
-    const grid = document.getElementById('grid');
-    const backBtn = document.getElementById('backBtn');
+const PHOTO_COUNT = 8; // change this
 
-    // CHANGE THIS NUMBER to how many photos you put in /photos/
-    const PHOTO_COUNT = 8; // photos/1.jpg ... photos/8.jpg
+// NO button runs away
+function moveNo(){
+  const w = window.innerWidth - 100;
+  const h = window.innerHeight - 50;
+  noBtn.style.left = Math.random()*w + "px";
+  noBtn.style.top = Math.random()*h + "px";
+}
+noBtn.addEventListener("mouseenter", moveNo);
+noBtn.addEventListener("click", (e)=>{e.preventDefault();moveNo();});
+noBtn.addEventListener("touchstart", (e)=>{e.preventDefault();moveNo();},{passive:false});
 
-    function moveNoButton() {
-      const padding = 14;
-      const stageRect = stage.getBoundingClientRect();
-      const btnRect = noBtn.getBoundingClientRect();
+// YES button
+yesBtn.addEventListener("click", ()=>{
+  buildGallery();
+  overlay.style.display = "block";
+  launchConfetti();
+});
 
-      const maxX = stageRect.width - btnRect.width - padding;
-      const maxY = stageRect.height - btnRect.height - padding;
+function buildGallery(){
+  grid.innerHTML="";
+  for(let i=1;i<=PHOTO_COUNT;i++){
+    const img=document.createElement("img");
+    img.src=`photos/${i}.jpg`;
+    grid.appendChild(img);
+  }
+}
 
-      const x = padding + Math.random() * maxX;
-      const y = padding + Math.random() * maxY;
+// confetti
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+canvas.width=innerWidth;
+canvas.height=innerHeight;
 
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top  = `${y}px`;
-      noBtn.style.transform = `translate(0,0)`;
-    }
+let pieces=[];
+function launchConfetti(){
+  pieces=Array.from({length:150},()=>({
+    x:Math.random()*canvas.width,
+    y:-20,
+    s:4+Math.random()*4,
+    v:2+Math.random()*3
+  }));
+  requestAnimationFrame(tick);
+}
 
-    noBtn.addEventListener('mouseenter', moveNoButton);
-    noBtn.addEventListener('click', (e) => { e.preventDefault(); moveNoButton(); });
-    noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); moveNoButton(); }, { passive:false });
+function tick(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  pieces.forEach(p=>{
+    p.y+=p.v;
+    ctx.fillRect(p.x,p.y,p.s,p.s);
+  });
+  pieces=pieces.filter(p=>p.y<canvas.height);
+  if(pieces.length) requestAnimationFrame(tick);
+}
+</script>
 
-    window.addEventListener('load', () => {
-      // Start near the bottom-right of the card
-      const card = document.getElementById('card').getBoundingClientRect();
-      const stageRect = stage.getBoundingClientRect();
-      noBtn.style.left = `${(card.left - stageRect.left) + card.width/2 + 95}px`;
-      noBtn.style.top  = `${(card.top  - stageRect.top ) + card.height - 78}px`;
-      noBtn.style.transform = `translate(-50%, -50%)`;
-      setTimeout(() => { noBtn.style.transform = 'translate(0,0)'; }, 50);
-    });
-
-    function buildGallery(){
-      grid.innerHTML = "";
-      for(let i=1;i<=PHOTO_COUNT;i++){
-        const tile = document.createElement('div');
-        tile.className = "tile";
-        const img = document.createElement('img');
-        img.loading = "lazy";
-        img.alt = `Us ${i}`;
-        img.src = `photos/${i}.jpg`;
-        tile.appendChild(img);
-        grid.appendChild(tile);
-      }
-    }
-
-    yesBtn.addEventListener('click', () => {
-      msg.style.display = 'block';
-      yesBtn.textContent = 'Yay 💚';
-      noBtn.style.display = 'none';
-
-      buildGallery();
-      overlay.style.display = "block";
-      launchConfetti();
-    });
-
-    backBtn.addEventListener('click', () => {
-      overlay.style.display = "none";
-    });
-
-    // Confetti (simple)
-    const canvas = document.getElementById('confetti');
-    const ctx = canvas.getContext('2d');
-    let confetti = [];
-    let running = false;
-
-    function launchConfetti(){
-      if(running) return;
-      running = true;
-
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-
-      const colors = ["#ffffff", "#ff6b8a", "#ffd86b", "#6bffb3", "#6bb6ff"];
-      confetti = Array.from({length: 160}, () => ({
-        x: Math.random()*canvas.width,
-        y: -20 - Math.random()*canvas.height*0.4,
-        r: 3 + Math.random()*5,
-        vx: -2 + Math.random()*4,
-        vy: 2 + Math.random()*5,
-        rot: Math.random()*Math.PI,
-        vr: -0.1 + Math.random()*0.2,
-        c: colors[(Math.random()*colors.length)|0],
-        a: 0.95
-      }));
-
-      requestAnimationFrame(tick);
-      setTimeout(() => running = false, 5000);
-    }
-
-    function tick(){
-      ctx.clearRect(0,0,canvas.width,canvas.height);
-      for (const p of confetti){
-        p.x += p.vx;
-        p.y += p.vy;
-        p.rot += p.vr;
-        p.vy += 0.03;
-        p.a *= 0.997;
-
-        ctx.save();
-        ctx.translate(p.x, p.y);
-        ctx.rotate(p.rot);
-        ctx.globalAlpha = p.a;
-        ctx.fillStyle = p.c;
-        ctx.fillRect(-p.r, -p.r, p.r*2, p.r*2);
-        ctx.restore();
-      }
-      confetti = confetti.filter(p => p.y < canvas.height + 30 && p.a > 0.05);
-      if(confetti.length && running) requestAnimationFrame(tick);
-      else ctx.clearRect(0,0,canvas.width,canvas.height);
-    }
-  </script>
 </body>
 </html>
