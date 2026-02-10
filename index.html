@@ -97,8 +97,8 @@ canvas{
 <div class="wrap">
   <div class="card">
 
-    <!-- REAL GINKO JPG -->
-    <img src="ginko.jpg" class="cat" alt="Ginko">
+    <!-- REAL GINKO -->
+    <img src="ginko.jpeg" class="cat" alt="Ginko">
 
     <h1>Will you be my Valentine? 💘</h1>
     <p>Choose wisely. (Ginko is watching.)</p>
@@ -125,9 +125,9 @@ const noBtn = document.getElementById('noBtn');
 const overlay = document.getElementById('overlay');
 const grid = document.getElementById('grid');
 
-const PHOTO_COUNT = 8; // change this
+const PHOTO_COUNT = 8; // change if needed
 
-/* NO button stays inside screen */
+/* NO button stays on screen */
 function moveNo(){
   const btnW = noBtn.offsetWidth || 100;
   const btnH = noBtn.offsetHeight || 50;
@@ -160,7 +160,7 @@ function buildGallery(){
   grid.innerHTML="";
   for(let i=1;i<=PHOTO_COUNT;i++){
     const img=document.createElement("img");
-    img.src=`photos/${i}.jpg`;
+    img.src=`${i}.jpeg`;
     grid.appendChild(img);
   }
 }
