@@ -37,19 +37,21 @@ p{ opacity:.8; }
   width:260px;
   display:block;
   margin:0 auto 12px;
-  filter:
-    drop-shadow(0 0 0 8px white)
-    drop-shadow(0 16px 22px rgba(0,0,0,.18));
+  border-radius:20px;
+  box-shadow:0 16px 22px rgba(0,0,0,.18);
 }
 
+/* BUTTON ROW = parallel */
 .btnRow{
-  margin-top:10px;
+  margin-top:15px;
+  display:flex;
+  justify-content:center;
+  gap:10px;
 }
 
 button{
   border:none;
   padding:12px 18px;
-  margin:6px;
   border-radius:999px;
   font-size:16px;
   cursor:pointer;
@@ -60,9 +62,10 @@ button{
 }
 
 #noBtn{
-  position:absolute;
+  position:relative;
 }
 
+/* gallery */
 .overlay{
   position:fixed;
   inset:0;
@@ -98,22 +101,21 @@ canvas{
 <body>
 <canvas id="confetti"></canvas>
 
-<div class="wrap" id="stage">
+<div class="wrap">
   <div class="card">
 
     <!-- REAL GINKO -->
-    <img src="ginko.png" class="cat">
+    <img src="ginko.jpg" class="cat">
 
     <h1>Will you be my Valentine? 💘</h1>
     <p>Choose wisely. (Ginko is watching.)</p>
 
     <div class="btnRow">
       <button id="yesBtn">Yes</button>
+      <button id="noBtn">No</button>
     </div>
 
   </div>
-
-  <button id="noBtn">No</button>
 </div>
 
 <div class="overlay" id="overlay">
@@ -125,9 +127,8 @@ canvas{
 </div>
 
 <script>
-const stage = document.getElementById('stage');
-const noBtn = document.getElementById('noBtn');
 const yesBtn = document.getElementById('yesBtn');
+const noBtn = document.getElementById('noBtn');
 const overlay = document.getElementById('overlay');
 const grid = document.getElementById('grid');
 
@@ -135,8 +136,9 @@ const PHOTO_COUNT = 8; // change this
 
 // NO button runs away
 function moveNo(){
-  const w = window.innerWidth - 100;
-  const h = window.innerHeight - 50;
+  const w = window.innerWidth - 120;
+  const h = window.innerHeight - 80;
+  noBtn.style.position = "absolute";
   noBtn.style.left = Math.random()*w + "px";
   noBtn.style.top = Math.random()*h + "px";
 }
